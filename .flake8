@@ -1,0 +1,12 @@
+[flake8]
+ignore = E722, W503
+max-line-length = 100
+per-file-ignore = __init__.py: F401
+exclude =
+    migrations
+    __pycache__
+    manage.py
+    settings.py
+    venv
+    env
+    .env

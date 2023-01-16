@@ -1,0 +1,27 @@
+{
+    "type": "home",
+    "blocks": [
+        {
+            "type": "header",
+            "text": {"type": "plain_text", "text": "Budget Performance"}
+        },
+        {"type": "divider"},
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "Date: *{processing_date}*"
+            },
+            "fields": [
+                {
+                    "type": "mrkdwn",
+                    "text": "*Payment*\n$300.00"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": "*TVM*\n$300.00"
+                }
+            ]
+        }
+    ]
+}
