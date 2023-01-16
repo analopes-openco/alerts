@@ -1,5 +1,5 @@
-from api import SlackAPI
-from interface import ISlack
+from src.slackapi import SlackAPI
+from src.interface import ISlack
 
 
 class ReportAlert(ISlack):
