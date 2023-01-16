@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,windows,linux,macos,pycharm,intellij,flask
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,windows,linux,macos,pycharm,intellij,flask
 
+.vscode/
+
 ### Flask ###
 instance/*
 !instance/.gitignore

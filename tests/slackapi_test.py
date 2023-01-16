@@ -18,6 +18,5 @@ def test_webhook_send_message_successfully(requests_mock, url, channel):
 
     slack_api = SlackAPI()
     response = slack_api.webhook(data={"text": "Hello, World!"})
-    print(response)
     assert response.text == "ok"
     assert response.status_code == 200
