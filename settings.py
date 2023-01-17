@@ -2,6 +2,5 @@ import os
 
 
 class Settings:
-    WEBHOOK_SLACK = "https://hooks.slack.com/services"
-    SLACK_CHANNEL_TEST = os.getenv('SLACK_CHANNEL_TEST')
-    DB_CONNECTION = os.getenv('DB_CONNECTION')
+    SLACK_WEBHOOK_URL = os.getenv('SLACK_WEBHOOK_URL')
+    DB_CONNECTION_URL = os.getenv('DB_CONNECTION_URL')
