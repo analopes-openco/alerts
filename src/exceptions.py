@@ -4,7 +4,9 @@ class SlackException(Exception):
         self.error = "Unknown"
 
 
-class SlackBadRequestException(SlackException):
-    def __init__(self, error: str, message: str):
-        super(SlackBadRequestException, self).__init__(message)
+class SlackRequestException(SlackException):
+    def __init__(self, error: str, message: str, status_code: int):
+        super(SlackRequestException, self).__init__(message)
         self.error = error
+        self.message = message
+        self.status_code = status_code

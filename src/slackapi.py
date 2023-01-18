@@ -4,6 +4,7 @@ from typing import Type
 from settings import Settings
 from collections import namedtuple
 from requests import Request, Response
+from src.exceptions import SlackException, SlackRequestException
 
 
 class SlackAPI:
@@ -26,10 +27,12 @@ class SlackAPI:
         response = self.__send_http_request(req_prepared=req.prepare())
 
         if 400 <= response.status_code < 500:
-            raise SlackBadRequestException(, response.text)
+            raise SlackRequestException(
+                response.reason, response.text, response.status_code
+            )
 
         elif response.status_code >= 500:
-            raise SlackException(message)
+            raise SlackException(response.text)
 
         else:
             return self._default_return(
