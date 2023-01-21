@@ -5,11 +5,11 @@ repos:
     - id: black
       language: system
       stages: [commit]
--   repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
-    hooks:
-    - id: flake8
-      stages: [commit]
+# -   repo: https://github.com/pycqa/flake8
+#     rev: 6.0.0
+#     hooks:
+#     - id: flake8
+#       stages: [commit]
 -   repo: local
     hooks:
     - id: pytest

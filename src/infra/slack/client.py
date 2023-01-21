@@ -4,14 +4,14 @@ from typing import Type
 from settings import Settings
 from collections import namedtuple
 from requests import Request, Response
-from src.exceptions import SlackException, SlackRequestException
+from src.infra.slack.exceptions import SlackException, SlackRequestException
 
 
-class SlackAPI:
+class SlackClient:
     def __init__(self) -> None:
         self._url = Settings.SLACK_WEBHOOK_URL
         self._header = {"Content-type": "application/json"}
-        self._default_return = namedtuple("SlackAPI", "status_code request response")
+        self._default_return = namedtuple("SlackClient", "status_code request response")
 
     def __send_http_request(self, req_prepared: Type[Request]) -> Type[Response]:
         session = requests.Session()

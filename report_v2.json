@@ -1,0 +1,95 @@
+{
+	"blocks": [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Rastreamento"
+			}
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"text": "*17 Janeiro 2023*",
+					"type": "mrkdwn"
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": ":alert: |  *GERU*  | :alert: "
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "See records",
+					"emoji": true
+				},
+				"style": "danger",
+				"value": "click_me_123",
+				"url": "https://google.com",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*FIDC-1*\n`18/01` *150 registros*\n`17/01` *80 registros*"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*FIDC-2*\n`18/01` *150 registros*\n`17/01` *80 registros*"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": ":alert: |  *REBEL*  | :alert: "
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "See records",
+					"emoji": true
+				},
+				"style": "danger",
+				"value": "click_me_123",
+				"url": "https://google.com",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*FIDC-1*\n`18/01` *150 registros*\n`17/01` *80 registros*"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*FIDC-2*\n`18/01` *150 registros*\n`17/01` *80 registros*"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+}
