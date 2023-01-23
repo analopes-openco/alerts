@@ -23,7 +23,7 @@ def client():
 
 def test_request_webhook(requests_mock, client, url, data):
     requests_mock.post(url=url)
-    send_message = client.webhook(data=data)
+    send_message = client.send_message_via_webhook(data=data)
     assert send_message.request.url != ""
     assert send_message.request.method == "POST"
     assert send_message.request.data == json.dumps(data)
@@ -31,7 +31,7 @@ def test_request_webhook(requests_mock, client, url, data):
 
 def test_webhook_send_message_success(requests_mock, client, url, data):
     requests_mock.post(url=url, status_code=200, text="ok")
-    send_message = client.webhook(data=data)
+    send_message = client.send_message_via_webhook(data=data)
     assert send_message.status_code == HTTPStatus.OK
     assert send_message.response == "ok"
 
@@ -39,6 +39,6 @@ def test_webhook_send_message_success(requests_mock, client, url, data):
 def test_webhook_send_message_error(requests_mock, client, url):
     requests_mock.post(url=url, status_code=400, text="invalid_payload")
     with raises(SlackRequestException) as e:
-        client.webhook(data={})
+        client.send_message_via_webhook(data={})
         assert e.status_code == HTTPStatus.BAD_REQUEST
         assert e.message == "invalid_payload"

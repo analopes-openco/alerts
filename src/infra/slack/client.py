@@ -17,7 +17,7 @@ class SlackClient:
         session = requests.Session()
         return session.send(req_prepared)
 
-    def webhook(self, data: dict) -> any:
+    def send_message_via_webhook(self, data: dict) -> any:
         req = Request(
             method="POST",
             url=self._url,

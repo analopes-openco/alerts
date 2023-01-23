@@ -1,5 +1,5 @@
+# https://api.slack.com/reference/surfaces/formatting
 from enum import Enum
-from typing import Type
 
 
 class StyleButton(Enum):
@@ -8,7 +8,15 @@ class StyleButton(Enum):
     RED = "danger"
 
 
-class Message:
+class SlackMessage:
+    def simple_text(self, text: str) -> dict:
+        """Return a plain text block.
+
+        Keyword arguments:
+        text -- message text in string format
+        """
+        return {"text": text}
+
     def blocks(self, components: list) -> dict:
         """Return a message.
 
@@ -17,11 +25,7 @@ class Message:
         """
         return {"blocks": components}
 
-    def divider(self):
-        """Return a content divider."""
-        return {"type": "divider"}
-
-    def header(self, title: str) -> dict:
+    def block_header(self, title: str) -> dict:
         """Return a plain text displayed in a larger, bold font.
 
         Keyword arguments:
@@ -30,7 +34,7 @@ class Message:
 
         return {"type": "header", "text": {"type": "plain_text", "text": title}}
 
-    def context(self, texts: list) -> dict:
+    def block_context(self, texts: list) -> dict:
         """Returns the message context.
 
         Keyword arguments:
@@ -43,8 +47,9 @@ class Message:
 
         return {"type": "context", "elements": elements}
 
-    def section(self, text: str, accessory: dict = None) -> dict:
-        """Return a flexible blocks used as a plain text block, in combination with any of the block elements.
+    def block_section(self, text: str, accessory: dict = None) -> dict:
+        """Return a flexible blocks used as a plain text block,
+        in combination with any of the block elements.
 
         Keyword arguments:
         text -- section text in markdown format
@@ -58,18 +63,24 @@ class Message:
 
         return block
 
-    def button(
-        self, name: str, url: str, style: Type[StyleButton] = StyleButton.BLACK.value
-    ) -> dict:
+    def block_actions(self, elements: list) -> dict:
+        """Returns the message actions.
+
+        Keyword arguments:
+        elements -- any of the block elements
+        """
+
+        return {"type": "actions", "elements": elements}
+
+    def element_button(self, name: str, url: str) -> dict:
         """Return a button.
 
         Keyword arguments:
         name -- defines the text of the button
         url -- browser link
-        style -- decorates buttons with color schemes
         """
 
-        block = {
+        return {
             "type": "button",
             "text": {
                 "type": "plain_text",
@@ -78,7 +89,6 @@ class Message:
             "url": url,
         }
 
-        if style:
-            block.update({"style": style})
-
-        return block
+    def divider(self):
+        """Return a content divider."""
+        return {"type": "divider"}
