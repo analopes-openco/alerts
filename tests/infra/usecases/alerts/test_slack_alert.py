@@ -1,6 +1,4 @@
-from http import HTTPStatus
-from pytest import fixture, raises
-from datetime import datetime, timedelta
+from pytest import fixture
 from src.domain.entities.slack_message import Message, Body, Link
 from src.infra.usecases.alerts.send.gateway import SlackAlertImpl
 

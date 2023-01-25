@@ -1,4 +1,3 @@
-from typing import Optional, List
 from abc import ABC, abstractclassmethod
 from src.infra.slack.client import SlackClient
 from src.infra.slack.message import SlackMessage
@@ -19,9 +18,9 @@ class SlackAlertImpl(ISlackAlert):
         self.slack_client = SlackClient()
         self.slack_message = SlackMessage()
 
-    def __send_slack_client(self, data: dict) -> any:
+    def __send_slack_client(self, message: dict) -> any:
         try:
-            send = self.slack_client.send_message_via_webhook(data=data)
+            send = self.slack_client.send_message_via_webhook(payload=message)
             return f"Slack: {send.response}"
         except SlackRequestException as e:
             return f"SlackError: {e.error} - {e.message}"
@@ -43,7 +42,7 @@ class SlackAlertImpl(ISlackAlert):
         """Return a message with elements block.
 
         Keyword arguments:
-        message:
+        message -- dataclass Message with:
             title -- message title in string format
             body -- list section of body
             subtitle -- text in markdown format

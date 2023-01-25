@@ -17,24 +17,30 @@ class SlackClient:
         session = requests.Session()
         return session.send(req_prepared)
 
-    def send_message_via_webhook(self, data: dict) -> any:
-        req = Request(
+    def send_message_via_webhook(self, payload: dict) -> any:
+        request = Request(
             method="POST",
             url=self._url,
-            data=json.dumps(data),
+            data=json.dumps(payload),
             headers=self._header,
         )
-        response = self.__send_http_request(req_prepared=req.prepare())
+        response = self.__send_http_request(req_prepared=request.prepare())
 
         if 400 <= response.status_code < 500:
             raise SlackRequestException(
-                response.reason, response.text, response.status_code
+                error=response.reason,
+                message=response.text,
+                status_code=response.status_code,
             )
 
         elif response.status_code >= 500:
-            raise SlackException(response.text)
+            raise SlackException(
+                message=response.text, status_code=response.status_code
+            )
 
         else:
             return self._default_return(
-                status_code=response.status_code, request=req, response=response.text
+                status_code=response.status_code,
+                request=request,
+                response=response.text,
             )
