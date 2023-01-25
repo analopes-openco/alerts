@@ -40,5 +40,5 @@ def test_webhook_send_message_error(requests_mock, client, url):
     requests_mock.post(url=url, status_code=400, text="invalid_payload")
     with raises(SlackRequestException) as e:
         client.send_message_via_webhook(data={})
-        assert e.status_code == HTTPStatus.BAD_REQUEST
-        assert e.message == "invalid_payload"
+    assert e.value.status_code == HTTPStatus.BAD_REQUEST
+    assert e.value.message == "invalid_payload"

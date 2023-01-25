@@ -1,64 +1,65 @@
-from dataclasses import dataclass
 from typing import Optional, List
 from abc import ABC, abstractclassmethod
 from src.infra.slack.client import SlackClient
 from src.infra.slack.message import SlackMessage
+from src.domain.entities.slack_message import Message, Body, Link
+from src.infra.slack.exceptions import SlackException, SlackRequestException
 
 
-@dataclass
-class Link:
-    name: str
-    url: str
-
-
-@dataclass
-class Body:
-    text: str
-    link: Optional[Link]
-
-
-class IAlertsSendMessage(ABC):
-    def create_simple_message(self, body: str) -> dict:
+class ISlackAlert(ABC):
+    def send_simple_message(self, message: str) -> dict:
         raise NotImplementedError()
 
-    def create_block_message(
-        self, title: str, body: List[Body], subtitle: list = None
-    ) -> dict:
+    def send_block_message(self, message: Message) -> dict:
         raise NotImplementedError()
 
 
-class AlertsSendMessageImpl:
+class SlackAlertImpl(ISlackAlert):
     def __init__(self):
+        self.slack_client = SlackClient()
         self.slack_message = SlackMessage()
 
-    def create_simple_message(self, text: str) -> dict:
-        """Return a message with simple text.
+    def __send_slack_client(self, data: dict) -> any:
+        try:
+            send = self.slack_client.send_message_via_webhook(data=data)
+            return f"Slack: {send.response}"
+        except SlackRequestException as e:
+            return f"SlackError: {e.error} - {e.message}"
+        except SlackException as e:
+            return f"SlackError: {e.error} - {e.message}"
+
+    def send_simple_message(self, message: str) -> dict:
+        """Return a message with simple text.self.slack_message.si
 
         Keyword arguments:
-        text -- message text in string format
+        message -- message text in string format
         """
-        return self.slack_message.simple_text(text=text)
 
-    def create_block_message(
-        self, title: str, body: List[Body], subtitle: list = None
-    ) -> dict:
+        return self.__send_slack_client(
+            data=self.slack_message.simple_text(text=message)
+        )
+
+    def send_block_message(self, message: Message) -> dict:
         """Return a message with elements block.
 
         Keyword arguments:
-        title -- message title in string format
-        body -- list section of body
-        subtitle -- text in markdown format
+        message:
+            title -- message title in string format
+            body -- list section of body
+            subtitle -- text in markdown format
         """
 
         components = [
-            self.slack_message.block_header(title=title),
+            self.slack_message.block_header(title=message.title),
             self.slack_message.divider(),
         ]
 
-        if subtitle:
-            components.insert(1, self.slack_message.block_context(texts=subtitle))
+        if message.subtitle:
+            components.insert(
+                1, self.slack_message.block_context(texts=message.subtitle)
+            )
 
-        for element in body:
+        for element in message.body:
             if element.link:
                 section = self.slack_message.block_section(
                     text=element.text,
@@ -72,9 +73,4 @@ class AlertsSendMessageImpl:
             components.append(section)
             components.append(self.slack_message.divider())
 
-        return self.slack_message.blocks(components)
-
-    def send_message(self, url_file, report):
-        return SlackClient().send_message__via_webhook(
-            data=self.create_message(text=report, url=url_file)
-        )
+        return self.__send_slack_client(data=self.slack_message.blocks(components))

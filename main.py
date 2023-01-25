@@ -1,4 +1,3 @@
-from src.usecases.alerts.send.gateway import ReportAlert
+from src.domain.usecases.alerts.usecase import Alert
 
-
-ReportAlert().send_message()
+Alert().send_message()
