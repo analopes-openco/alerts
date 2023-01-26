@@ -24,10 +24,12 @@ def test_send_simple_message_error(mocker, slack):
     assert send_message == "SlackError: Bad Request - no_text"
 
 
-def test_send_block_message_success(mocker, slack):
-    mocker.patch.object(SlackAlertImpl, "send_block_message", return_value="Slack: ok")
+def test_send_structured_message_success(mocker, slack):
+    mocker.patch.object(
+        SlackAlertImpl, "send_structured_message", return_value="Slack: ok"
+    )
 
-    send_message = slack.send_block_message(
+    send_message = slack.send_structured_message(
         message=Message(
             title="Title",
             subtitle=["subtitulo_1", "subtitulo_2"],
@@ -46,14 +48,14 @@ def test_send_block_message_success(mocker, slack):
     assert send_message == "Slack: ok"
 
 
-def test_send_block_message_error(mocker, slack):
+def test_send_structured_message_error(mocker, slack):
     mocker.patch.object(
         SlackAlertImpl,
-        "send_block_message",
+        "send_structured_message",
         return_value="SlackError: Bad Request - invalid_blocks",
     )
 
-    send_message = slack.send_block_message(
+    send_message = slack.send_structured_message(
         message=Message(title="", subtitle=[], body=[])
     )
     assert send_message == "SlackError: Bad Request - invalid_blocks"

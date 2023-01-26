@@ -9,7 +9,7 @@ class ISlackAlert(ABC):
     def send_simple_message(self, message: str) -> dict:
         raise NotImplementedError()
 
-    def send_block_message(self, message: Message) -> dict:
+    def send_structured_message(self, message: Message) -> dict:
         raise NotImplementedError()
 
 
@@ -38,7 +38,7 @@ class SlackAlertImpl(ISlackAlert):
             data=self.slack_message.simple_text(text=message)
         )
 
-    def send_block_message(self, message: Message) -> dict:
+    def send_structured_message(self, message: Message) -> dict:
         """Return a message with elements block.
 
         Keyword arguments:

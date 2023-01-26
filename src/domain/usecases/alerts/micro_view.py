@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from src.domain.entities.slack_message import Message, Body, Link
-from src.infra.usecases.alerts.send.gateway import SlackAlertImpl
+from src.infra.usecases.slack.send.gateway import SlackAlertImpl
 
 
 class Alert:
@@ -22,7 +22,7 @@ class Alert:
         return body
 
     def send_message(self):
-        return self.slack_alert.send_block_message(
+        return self.slack_alert.send_structured_message(
             message=Message(
                 title="Rastreamento",
                 subtitle=[
@@ -31,3 +31,5 @@ class Alert:
                 body=[self.report_geru(), self.report_rebel()],
             )
         )
+
+        return self.slack_alert.send_simple_message(message="Hello World!")
