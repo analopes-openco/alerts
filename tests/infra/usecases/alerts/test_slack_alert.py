@@ -1,6 +1,6 @@
 from pytest import fixture
 from src.domain.entities.slack_message import Message, Body, Link
-from src.infra.usecases.alerts.send.gateway import SlackAlertImpl
+from src.infra.usecases.slack.send.gateway import SlackAlertImpl
 
 
 @fixture

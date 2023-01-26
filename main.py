@@ -1,3 +1,3 @@
-from src.domain.usecases.alerts.usecase import Alert
+from src.domain.usecases.alerts.micro_view import Alert
 
 Alert().send_message()
